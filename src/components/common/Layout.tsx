@@ -1,12 +1,19 @@
+// src/components/common/Layout.tsx
 import React from 'react';
-import { AppBar, Toolbar, Typography, Container, Box } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { AppBar, Toolbar, Typography, Container, Box, Button } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const navigate = useNavigate();
+
+  const handleSignIn = () => {
+    navigate('/signin');
+  };
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <AppBar position="static">
@@ -17,8 +24,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <Box component="nav">
             <Link to="/services" style={{ color: 'white', marginRight: '15px', textDecoration: 'none' }}>Services</Link>
             <Link to="/profile" style={{ color: 'white', marginRight: '15px', textDecoration: 'none' }}>Profile</Link>
-            <Link to="/about" style={{ color: 'white', textDecoration: 'none' }}>About</Link>
+            <Link to="/about" style={{ color: 'white', marginRight: '15px', textDecoration: 'none' }}>About</Link>
           </Box>
+          {/* Botón de Sign In */}
+          <Button color="inherit" onClick={handleSignIn}>
+            Sign In
+          </Button>
         </Toolbar>
       </AppBar>
       <Container component="main" sx={{ mt: 4, mb: 4, flexGrow: 1 }}>
