@@ -16,7 +16,7 @@ import ErrorBoundary from "./components/errorBoundary/ErrorBoundary";
 import Layout from "./components/common/Layout";
 import Home from "./components/pages/Home";
 import Services from "./components/pages/Services";
-import ServiceDetails from "./components/pages/SeviceDetails";
+import ServiceDetails from "./components/pages/SeviceDetails";  // Corrige la ortografía aquí
 import Profile from "./components/pages/Profile";
 import About from "./components/pages/About";
 import SignInPage from "./components/pages/SignInPage";
@@ -61,7 +61,7 @@ const App: React.FC = () => {
               <Route path="/signin" element={<SignInPage />} />
               <Route path="/signup" element={<SignUpPage />} />
               <Route
-                path="/"
+                path="*"
                 element={
                   <AuthWrapper>
                     <Layout>
