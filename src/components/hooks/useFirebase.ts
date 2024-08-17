@@ -8,7 +8,15 @@ export const useFirebase = () => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(setUser);
+    const unsubscribe = auth.onAuthStateChanged(
+      (user) => {
+        setUser(user);
+      },
+      (error) => {
+        console.error("Error in onAuthStateChanged: ", error);
+        setUser(null);
+      }
+    );
     return unsubscribe;
   }, []);
 
