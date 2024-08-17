@@ -1,3 +1,5 @@
+// src/pages/Profile.tsx
+
 import React, { useEffect, useState } from "react";
 import { Typography, Paper, Box, Avatar, CircularProgress } from "@mui/material";
 import { getCurrentUser } from "../services/firebaseService";
@@ -26,9 +28,9 @@ const Profile: React.FC = () => {
           if (userSnap.exists()) {
             const userData = userSnap.data();
             setUser({
-              name: userData.name || currentUser.displayName || "Anonymous",
-              email: userData.email || currentUser.email || "No Email",
-              joinDate: userData.joinDate || "Unknown",
+              name: userData?.name || currentUser.displayName || "Anonymous",
+              email: userData?.email || currentUser.email || "No Email",
+              joinDate: userData?.joinDate || "Unknown",
             });
           } else {
             console.error("No such document!");
