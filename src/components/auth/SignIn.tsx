@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { TextField, Button, Box, Alert, CircularProgress } from "@mui/material";
+import { TextField, Button, Box, Alert, CircularProgress, Typography } from "@mui/material";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/config";
+import { signInWithGoogle } from "../services/firebaseService";
 import { useNavigate } from "react-router-dom";
 
 const SignIn: React.FC = () => {
@@ -20,16 +21,31 @@ const SignIn: React.FC = () => {
       setLoading(false);
       navigate("/profile"); // O la ruta que desees después del inicio de sesión
     } catch (error) {
-      setError(
-        "Error signing in. Please check your credentials and try again.",
-      );
+      setError("Error signing in. Please check your credentials and try again.");
       console.error("Error signing in:", error);
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setError(null);
+    setLoading(true);
+    try {
+      await signInWithGoogle();
+      setLoading(false);
+      navigate("/profile"); // O la ruta que desees después del inicio de sesión con Google
+    } catch (error) {
+      setError("Error signing in with Google. Please try again.");
+      console.error("Error signing in with Google:", error);
       setLoading(false);
     }
   };
 
   return (
     <Box component="form" onSubmit={handleSignIn} sx={{ mt: 1 }}>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Sign In
+      </Typography>
       {error && <Alert severity="error">{error}</Alert>}
       <TextField
         margin="normal"
@@ -63,6 +79,15 @@ const SignIn: React.FC = () => {
         disabled={loading}
       >
         {loading ? <CircularProgress size={24} /> : "Sign In"}
+      </Button>
+      <Button
+        fullWidth
+        variant="outlined"
+        sx={{ mt: 2, mb: 2 }}
+        onClick={handleGoogleSignIn}
+        disabled={loading}
+      >
+        {loading ? <CircularProgress size={24} /> : "Sign in with Google"}
       </Button>
     </Box>
   );

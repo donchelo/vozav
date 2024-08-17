@@ -1,10 +1,16 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+// src/components/context/AuthContext.tsx
+
+import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { User } from "firebase/auth";
-import { auth } from "../firebase/config"; // Ruta corregida
+import { auth } from "../firebase/config";
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
+}
+
+interface AuthProviderProps {
+  children: ReactNode;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -12,7 +18,7 @@ const AuthContext = createContext<AuthContextType>({
   loading: true,
 });
 
-export const AuthProvider: React.FC = ({ children }) => {
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
