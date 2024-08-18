@@ -23,6 +23,7 @@ import {
   Map as MapIcon,
   Security as SecurityIcon
 } from '@mui/icons-material';
+import theme from '../styles/theme'; // Importa el tema centralizado
 
 // Styled components for consistent styling
 const StyledIcon = styled(Box)(({ theme }) => ({
@@ -88,7 +89,6 @@ const contentItems = [
 
 const Home: React.FC = () => {
   const { user } = useAuth();
-  const theme = useTheme();
 
   return (
     <Container maxWidth="lg" sx={{ mt: 8, mb: 4 }}>

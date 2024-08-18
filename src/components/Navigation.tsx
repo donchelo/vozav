@@ -16,38 +16,11 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
-  ThemeProvider,
-  createTheme
+  DialogActions
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AuthButton from './AuthButton';
-
-// Custom theme with a modern color palette
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#3A86FF', // Vibrant blue
-    },
-    secondary: {
-      main: '#FF006E', // Vibrant pink
-    },
-    background: {
-      default: '#FFFFFF',
-      paper: '#F8F9FA',
-    },
-    text: {
-      primary: '#212529',
-      secondary: '#6C757D',
-    },
-  },
-  typography: {
-    fontFamily: '"Poppins", "Helvetica", "Arial", sans-serif',
-    h6: {
-      fontWeight: 600,
-    },
-  },
-});
+import theme from '../styles/theme'; // Importa el tema centralizado
 
 // Content for About and Contact sections
 const aboutContent = `En vozav, creemos en el poder del voz a voz digital. Sabemos que las mejores recomendaciones provienen de personas que han vivido experiencias reales, y por eso hemos creado una plataforma donde la confianza y la autenticidad son lo más importante.
@@ -131,7 +104,7 @@ const Navigation: React.FC = () => {
   );
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <AppBar position="static" color="primary" elevation={0}>
         <Toolbar>
           {isMobile && (
@@ -220,7 +193,7 @@ const Navigation: React.FC = () => {
           </Button>
         </DialogActions>
       </Dialog>
-    </ThemeProvider>
+    </>
   );
 };
 
