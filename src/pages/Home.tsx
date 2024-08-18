@@ -1,116 +1,78 @@
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
+import React, { useState } from 'react';
 import {
-  Typography,
-  Box,
-  Button,
-  Paper,
-  useTheme,
-  Grid,
-  Card,
-  CardContent,
-  CardActions,
-  Container,
-  styled
+  Typography, Box, Button, Paper, useTheme, Grid, Container, styled, alpha
 } from '@mui/material';
 import {
-  Home as HomeIcon,
-  Login as LoginIcon,
-  Explore as ExploreIcon,
-  Verified as VerifiedIcon,
-  Group as GroupIcon,
-  Map as MapIcon,
-  Security as SecurityIcon
+  Home as HomeIcon, Login as LoginIcon, Explore as ExploreIcon, Verified as VerifiedIcon,
+  Group as GroupIcon, Map as MapIcon, Security as SecurityIcon
 } from '@mui/icons-material';
-import theme from '../styles/theme'; // Importa el tema centralizado
+import { Link as RouterLink } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
+import FeatureDialog from '../components/FeatureDialog';
+import featuresData from '../data/features.json';
 
-// Styled components for consistent styling
+// Definición de iconos
+const iconMapping = {
+  ExploreIcon, VerifiedIcon, SecurityIcon, GroupIcon, MapIcon, HomeIcon
+};
+
+// Estilos personalizados
 const StyledIcon = styled(Box)(({ theme }) => ({
-  fontSize: 48,
+  fontSize: 64,
   color: theme.palette.primary.main,
-  marginBottom: theme.spacing(2),
+  marginBottom: theme.spacing(3),
 }));
 
-const StyledCard = styled(Card)(({ theme }) => ({
+const StyledCard = styled(Paper)(({ theme }) => ({
   height: '100%',
   display: 'flex',
   flexDirection: 'column',
+  alignItems: 'center',
+  padding: theme.spacing(3),
   transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
   '&:hover': {
-    transform: 'translateY(-5px)',
-    boxShadow: theme.shadows[8],
+    transform: 'translateY(-8px)',
+    boxShadow: theme.shadows[10],
   },
 }));
 
-const StyledCardContent = styled(CardContent)({
-  flexGrow: 1,
-});
-
-// Content items array
-const contentItems = [
-  {
-    title: "Descubre y Confía",
-    content: "Vozav es tu guía local para encontrar servicios de calidad, respaldados por la confianza de miles de usuarios. Descubre lo mejor de la ciudad con recomendaciones auténticas y personalizadas.",
-    icon: ExploreIcon,
-    color: 'primary'
-  },
-  {
-    title: "Servicios Verificados a Tu Alcance",
-    content: "Accede a una plataforma centralizada con los mejores servicios locales, verificados por nuestra comunidad. La calidad y la confianza, ahora en un solo lugar.",
-    icon: VerifiedIcon,
-    color: 'secondary'
-  },
-  {
-    title: "Toma Decisiones Informadas",
-    content: "Con Vozav, no pierdas tiempo buscando. Filtra, compara y elige los servicios que realmente necesitas, basándote en opiniones reales y detalladas.",
-    icon: SecurityIcon,
-    color: 'success'
-  },
-  {
-    title: "Conéctate con Tu Comunidad",
-    content: "Sé parte de una comunidad que comparte tus intereses. Descubre nuevos servicios, participa en eventos locales y contribuye con tus propias recomendaciones.",
-    icon: GroupIcon,
-    color: 'warning'
-  },
-  {
-    title: "Encuentra Servicios Cercanos",
-    content: "Localiza servicios de calidad cerca de ti con nuestra integración de mapas y geolocalización. La ciudad a tu alcance, donde quiera que estés.",
-    icon: MapIcon,
-    color: 'info'
-  },
-  {
-    title: "Garantía de Autenticidad",
-    content: "En Vozav, cada recomendación cuenta. Verificamos la autenticidad de usuarios y reseñas para ofrecerte una experiencia confiable y segura.",
-    icon: SecurityIcon,
-    color: 'error'
-  }
-] as const;
+const GradientBox = styled(Box)(({ theme }) => ({
+  background: `linear-gradient(45deg, ${theme.palette.primary.main} 30%, ${theme.palette.secondary.main} 90%)`,
+  borderRadius: theme.shape.borderRadius,
+  padding: theme.spacing(6, 4),
+  color: theme.palette.common.white,
+  textAlign: 'center',
+  marginBottom: theme.spacing(6),
+}));
 
 const Home: React.FC = () => {
   const { user } = useAuth();
+  const theme = useTheme();
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedFeature, setSelectedFeature] = useState<typeof featuresData[0] | null>(null);
+
+  const handleOpenDialog = (feature: typeof featuresData[0]) => {
+    setSelectedFeature(feature);
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+    setSelectedFeature(null);
+  };
 
   return (
     <Container maxWidth="lg" sx={{ mt: 8, mb: 4 }}>
-      {/* Header */}
-      <Paper 
-        elevation={3} 
-        sx={{ 
-          p: 4, 
-          display: 'flex', 
-          flexDirection: 'column', 
-          alignItems: 'center',
-          backgroundColor: theme.palette.background.paper,
-          mb: 4
-        }}
-      >
+      {/* Hero Section */}
+      <GradientBox>
         <StyledIcon>
-          <HomeIcon />
+          <HomeIcon fontSize="inherit" />
         </StyledIcon>
-        <Typography component="h1" variant="h4" gutterBottom>
+        <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
           Bienvenido a Vozav
         </Typography>
-        <Typography variant="h6" align="center" color="textSecondary" paragraph>
+        <Typography variant="h5" paragraph>
           Tu plataforma líder de recomendaciones de servicios locales
         </Typography>
         {user ? (
@@ -122,56 +84,80 @@ const Home: React.FC = () => {
               component={RouterLink}
               to="/profile"
               variant="contained"
-              color="secondary"
-              sx={{ mt: 2 }}
+              size="large"
+              sx={{
+                mt: 2,
+                bgcolor: 'common.white',
+                color: 'primary.main',
+                '&:hover': {
+                  bgcolor: alpha(theme.palette.common.white, 0.9),
+                },
+              }}
             >
               Ir al Perfil
             </Button>
           </>
         ) : (
           <>
-            <Typography variant="body1" gutterBottom>
-              Inicia sesión para acceder a tu perfil  y descubrir los mejores servicios locales.
+            <Typography variant="body1" paragraph>
+              Inicia sesión para acceder a tu perfil y descubrir los mejores servicios locales.
             </Typography>
             <Button
               component={RouterLink}
               to="/auth"
-              variant="contained"
-              color="primary"
+              variant="outlined"
+              size="large"
               startIcon={<LoginIcon />}
-              sx={{ mt: 2 }}
+              sx={{
+                mt: 2,
+                borderColor: 'common.white',
+                color: 'common.white',
+                '&:hover': {
+                  bgcolor: alpha(theme.palette.common.white, 0.1),
+                  borderColor: 'common.white',
+                },
+              }}
             >
               Iniciar Sesión
             </Button>
           </>
         )}
-      </Paper>
+      </GradientBox>
 
-      {/* Main content */}
+      {/* Features Grid */}
       <Grid container spacing={4}>
-        {contentItems.map((item, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
-            <StyledCard>
-              <StyledCardContent>
-                <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-                  <item.icon sx={{ fontSize: 40, color: theme.palette[item.color].main }} />
-                </Box>
-                <Typography variant="h5" component="div" gutterBottom>
+        {featuresData.map((item, index) => {
+          const IconComponent = iconMapping[item.icon as keyof typeof iconMapping];
+          const color = theme.palette[item.color as keyof typeof theme.palette];
+          const colorMain = typeof color === 'object' && color !== null && 'main' in color ? color.main : undefined;
+
+          return (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <StyledCard onClick={() => handleOpenDialog(item)} elevation={3}>
+                <IconComponent sx={{ fontSize: 48, color: colorMain || theme.palette.text.primary, mb: 2 }} />
+                <Typography variant="h6" component="h3" gutterBottom align="center">
                   {item.title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="text.secondary" align="center">
                   {item.content}
                 </Typography>
-              </StyledCardContent>
-              <CardActions>
-                <Button size="small" color={item.color}>
-                  Saber más
-                </Button>
-              </CardActions>
-            </StyledCard>
-          </Grid>
-        ))}
+              </StyledCard>
+            </Grid>
+          );
+        })}
       </Grid>
+
+      {/* Feature Dialog */}
+      {selectedFeature && (
+        <FeatureDialog
+          open={dialogOpen}
+          onClose={handleCloseDialog}
+          title={selectedFeature.title}
+          content={selectedFeature.content}
+          detailedContent={selectedFeature.detailedContent}
+          Icon={iconMapping[selectedFeature.icon as keyof typeof iconMapping]}
+        />
+      )}
     </Container>
   );
 };

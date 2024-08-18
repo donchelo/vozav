@@ -1,0 +1,45 @@
+[
+    {
+      "title": "Descubre y Confía",
+      "content": "Vozav es tu guía local para encontrar servicios de calidad, respaldados por la confianza de miles de usuarios.",
+      "detailedContent": "Nuestra plataforma utiliza un avanzado sistema de recomendaciones basado en la experiencia de otros usuarios como tú. Explora diversas opciones, lee reseñas y elige con confianza sabiendo que cada servicio ha sido valorado por nuestra comunidad.",
+      "icon": "ExploreIcon",
+      "color": "primary"
+    },
+    {
+      "title": "Servicios Verificados a Tu Alcance",
+      "content": "Accede a una plataforma centralizada con los mejores servicios locales, verificados por nuestra comunidad.",
+      "detailedContent": "Todos los servicios disponibles en Vozav han sido minuciosamente evaluados y aprobados por nuestra comunidad de usuarios activos. Nos aseguramos de que cada proveedor cumpla con los más altos estándares de calidad y fiabilidad.",
+      "icon": "VerifiedIcon",
+      "color": "secondary"
+    },
+    {
+      "title": "Toma Decisiones Informadas",
+      "content": "Con Vozav, no pierdas tiempo buscando. Filtra, compara y elige los servicios que realmente necesitas.",
+      "detailedContent": "Nuestro sistema de filtros avanzados te permite seleccionar servicios según tus necesidades específicas, ya sea por ubicación, precio o calificaciones de otros usuarios. De esta manera, puedes tomar decisiones informadas de manera rápida y efectiva.",
+      "icon": "SecurityIcon",
+      "color": "success"
+    },
+    {
+      "title": "Conéctate con Tu Comunidad",
+      "content": "Sé parte de una comunidad que comparte tus intereses. Descubre nuevos servicios y participa en eventos locales.",
+      "detailedContent": "Únete a una red de usuarios que, al igual que tú, buscan lo mejor para su comunidad. Comparte tus experiencias, descubre eventos locales relevantes y contribuye con tus propias recomendaciones para ayudar a otros a encontrar servicios de calidad.",
+      "icon": "GroupIcon",
+      "color": "warning"
+    },
+    {
+      "title": "Encuentra Servicios Cercanos",
+      "content": "Localiza servicios de calidad cerca de ti con nuestra integración de mapas y geolocalización.",
+      "detailedContent": "Gracias a la integración de tecnología de geolocalización, puedes descubrir servicios que están literalmente a la vuelta de la esquina. Aprovecha al máximo lo que tu área tiene para ofrecer sin necesidad de recorrer largas distancias.",
+      "icon": "MapIcon",
+      "color": "info"
+    },
+    {
+      "title": "Garantía de Autenticidad",
+      "content": "En Vozav, cada recomendación cuenta. Verificamos la autenticidad de usuarios y reseñas para ofrecerte una experiencia confiable y segura.",
+      "detailedContent": "Nuestro compromiso es con la transparencia y la autenticidad. Cada reseña y recomendación en Vozav es verificada para asegurarnos de que proviene de usuarios reales y genuinos, garantizando así una experiencia confiable para todos.",
+      "icon": "SecurityIcon",
+      "color": "error"
+    }
+  ]
+  
