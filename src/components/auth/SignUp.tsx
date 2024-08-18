@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { TextField, Button, Box, Alert, CircularProgress } from "@mui/material";
+import { TextField, Button, Box, Alert, CircularProgress, Typography } from "@mui/material";
 import { registerUser } from "../services/auth";
 import { useNavigate } from "react-router-dom";
+import { signInWithGoogle } from "../services/firebaseService"; // Importar la función de Google
 
 const SignUp: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -21,6 +22,20 @@ const SignUp: React.FC = () => {
     } catch (error) {
       setError("Error signing up. Please try again.");
       console.error("Error signing up:", error);
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setError(null);
+    setLoading(true);
+    try {
+      await signInWithGoogle(); // Llamar a la función de Google Sign-In
+      setLoading(false);
+      navigate("/profile");
+    } catch (error) {
+      setError("Error signing in with Google. Please try again.");
+      console.error("Error signing in with Google:", error);
       setLoading(false);
     }
   };
@@ -60,6 +75,16 @@ const SignUp: React.FC = () => {
         disabled={loading}
       >
         {loading ? <CircularProgress size={24} /> : "Sign Up"}
+      </Button>
+      <Typography align="center" sx={{ mt: 2 }}>Or</Typography>
+      <Button
+        fullWidth
+        variant="outlined"
+        sx={{ mt: 2, mb: 2 }}
+        onClick={handleGoogleSignIn}
+        disabled={loading}
+      >
+        {loading ? <CircularProgress size={24} /> : "Sign in with Google"}
       </Button>
     </Box>
   );

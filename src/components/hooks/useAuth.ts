@@ -6,15 +6,29 @@ import { auth } from "../firebase/config";
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setLoading(false);
-    });
+    console.log("useAuth effect running");
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (user) => {
+        console.log("Auth state changed:", user);
+        setUser(user);
+        setLoading(false);
+      },
+      (error) => {
+        console.error("Auth error:", error);
+        setError(error);
+        setLoading(false);
+      }
+    );
 
-    return unsubscribe;
+    return () => {
+      console.log("useAuth effect cleanup");
+      unsubscribe();
+    };
   }, []);
 
-  return { user, loading };
+  return { user, loading, error };
 };
