@@ -21,17 +21,53 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import AuthButton from './AuthButton';
 import LogoAvatar from './LogoAvatar';
-import theme from '../styles/theme'; // Asegúrate de importar el theme
+import ReactMarkdown from 'react-markdown';
 
-// Contenido de about
-const aboutContent = `En vozav, creemos en el poder del voz a voz digital...`; // (agrega el contenido completo)
+// Definimos la interfaz para los elementos de navegación
+interface NavItem {
+  text: string;
+  path?: string;
+  action?: () => void;
+}
+
+// Contenido de about en formato Markdown
+const aboutContent = `
+# Acerca de Vozav
+
+## Nuestra Misión
+
+Vozav transforma el descubrimiento de servicios locales, llevando el poder del "voz a voz" al mundo digital. Conectamos a residentes y turistas con los mejores servicios de la ciudad a través de recomendaciones auténticas y confiables.
+
+## ¿Qué nos hace únicos?
+
+1. **Recomendaciones Verificadas**: Experiencias reales y confiables.
+2. **Personalización Inteligente**: Sugerencias adaptadas a tus preferencias.
+3. **Comunidad de Confianza**: Una red local activa y comprometida.
+
+## Beneficios
+
+- Ahorra tiempo encontrando servicios confiables.
+- Toma decisiones informadas basadas en experiencias reales.
+- Descubre nuevas experiencias locales de calidad.
+- Conéctate con tu comunidad y contribuye a su crecimiento.
+
+Vozav no es solo una plataforma, es un ecosistema donde la confianza, la comunidad y la innovación se unen para mejorar tu vida cotidiana.
+
+**Vozav: Descubre, Comparte, Confía.**
+`;
 
 const Navigation: React.FC = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogContent, setDialogContent] = useState('');
   const [dialogTitle, setDialogTitle] = useState('');
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const navItems: NavItem[] = [
+    { text: 'Home', path: '/' },
+    { text: 'About', action: () => handleDialogOpen(aboutContent, 'About Vozav') }
+  ];
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
@@ -50,12 +86,16 @@ const Navigation: React.FC = () => {
     setDialogOpen(false);
   };
 
-  const navItems = [
-    { text: 'Home', path: '/' },
-    { text: 'About', action: () => handleDialogOpen(aboutContent, 'About vozav') }
-  ];
+  const handleNavItemClick = (item: NavItem) => {
+    if (item.action) {
+      item.action();
+    }
+    if (drawerOpen) {
+      setDrawerOpen(false);
+    }
+  };
 
-  const drawer = (
+  const renderDrawerContent = () => (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', bgcolor: 'background.paper', height: '100%' }}>
       <Typography variant="h6" sx={{ my: 2, color: 'primary.main' }}>
         vozav
@@ -64,7 +104,7 @@ const Navigation: React.FC = () => {
         {navItems.map((item) => (
           <ListItem key={item.text} disablePadding>
             <Button
-              onClick={item.action || (() => {})}
+              onClick={() => handleNavItemClick(item)}
               component={item.path ? RouterLink : 'button'}
               to={item.path}
               sx={{ 
@@ -85,9 +125,32 @@ const Navigation: React.FC = () => {
     </Box>
   );
 
+  const renderNavButtons = () => (
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      {navItems.map((item) => (
+        <Button
+          key={item.text}
+          color="inherit"
+          onClick={() => handleNavItemClick(item)}
+          component={item.path ? RouterLink : 'button'}
+          to={item.path}
+          sx={{
+            mx: 1,
+            '&:hover': {
+              bgcolor: 'primary.dark',
+            },
+          }}
+        >
+          {item.text}
+        </Button>
+      ))}
+      <AuthButton />
+    </Box>
+  );
+
   return (
     <>
-      <AppBar position="static" color="primary" elevation={0}>
+      <AppBar position="static" sx={{ backgroundColor: theme.palette.secondary.main }} elevation={0}>
         <Toolbar>
           {isMobile && (
             <IconButton
@@ -107,28 +170,7 @@ const Navigation: React.FC = () => {
           <Typography variant="subtitle2" sx={{ display: { xs: 'none', sm: 'block' }, mr: 2, fontStyle: 'italic' }}>
             El poder del voz a voz
           </Typography>
-          {!isMobile && (
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              {navItems.map((item) => (
-                <Button
-                  key={item.text}
-                  color="inherit"
-                  onClick={item.action}
-                  component={item.path ? RouterLink : 'button'}
-                  to={item.path}
-                  sx={{
-                    mx: 1,
-                    '&:hover': {
-                      bgcolor: 'primary.dark',
-                    },
-                  }}
-                >
-                  {item.text}
-                </Button>
-              ))}
-              <AuthButton />
-            </Box>
-          )}
+          {!isMobile && renderNavButtons()}
         </Toolbar>
       </AppBar>
       <Box component="nav">
@@ -144,7 +186,7 @@ const Navigation: React.FC = () => {
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
           }}
         >
-          {drawer}
+          {renderDrawerContent()}
         </Drawer>
       </Box>
       <Dialog
@@ -166,9 +208,7 @@ const Navigation: React.FC = () => {
           {dialogTitle}
         </DialogTitle>
         <DialogContent dividers>
-          <Typography id="dialog-description" style={{ whiteSpace: 'pre-line', color: 'text.primary' }}>
-            {dialogContent}
-          </Typography>
+          <ReactMarkdown>{dialogContent}</ReactMarkdown>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleDialogClose} color="primary">
