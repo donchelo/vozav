@@ -1,6 +1,5 @@
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
-import AuthButton from '../components/AuthButton';
 import { 
   Container, 
   Typography, 
@@ -58,7 +57,7 @@ const Dashboard: React.FC = () => {
               Dashboard
             </Typography>
           </Box>
-          <AuthButton />
+        
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
           <Avatar 
