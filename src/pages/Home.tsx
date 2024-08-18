@@ -120,18 +120,18 @@ const Home: React.FC = () => {
             </Typography>
             <Button
               component={RouterLink}
-              to="/dashboard"
+              to="/profile"
               variant="contained"
               color="secondary"
               sx={{ mt: 2 }}
             >
-              Ir al Dashboard
+              Ir al Perfil
             </Button>
           </>
         ) : (
           <>
             <Typography variant="body1" gutterBottom>
-              Inicia sesión para acceder a tu dashboard y descubrir los mejores servicios locales.
+              Inicia sesión para acceder a tu perfil  y descubrir los mejores servicios locales.
             </Typography>
             <Button
               component={RouterLink}
