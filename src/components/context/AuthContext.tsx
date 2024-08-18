@@ -1,15 +1,11 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { User } from "firebase/auth";
-import { auth } from "../firebase/config";
+import { auth } from "../firebase/firebaseApp";
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
   error: Error | null;
-}
-
-interface AuthProviderProps {
-  children: ReactNode;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -18,7 +14,7 @@ const AuthContext = createContext<AuthContextType>({
   error: null,
 });
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);

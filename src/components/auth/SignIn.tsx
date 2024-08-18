@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { TextField, Button, Box, Alert, CircularProgress, Typography } from "@mui/material";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { TextField, Button, Box, Alert, CircularProgress, Divider, Typography } from "@mui/material";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../firebase/config";
-import { signInWithGoogle } from "../services/firebaseService";
 import { useNavigate } from "react-router-dom";
+import GoogleIcon from '@mui/icons-material/Google';
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -12,14 +12,14 @@ const SignIn: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSignIn = async (e: React.FormEvent) => {
+  const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
       setLoading(false);
-      navigate("/profile"); // O la ruta que desees después del inicio de sesión
+      navigate("/profile");
     } catch (error) {
       setError("Error signing in. Please check your credentials and try again.");
       console.error("Error signing in:", error);
@@ -30,10 +30,11 @@ const SignIn: React.FC = () => {
   const handleGoogleSignIn = async () => {
     setError(null);
     setLoading(true);
+    const provider = new GoogleAuthProvider();
     try {
-      await signInWithGoogle();
+      await signInWithPopup(auth, provider);
       setLoading(false);
-      navigate("/profile"); // O la ruta que desees después del inicio de sesión con Google
+      navigate("/profile");
     } catch (error) {
       setError("Error signing in with Google. Please try again.");
       console.error("Error signing in with Google:", error);
@@ -42,52 +43,59 @@ const SignIn: React.FC = () => {
   };
 
   return (
-    <Box component="form" onSubmit={handleSignIn} sx={{ mt: 1 }}>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Sign In
-      </Typography>
-      {error && <Alert severity="error">{error}</Alert>}
-      <TextField
-        margin="normal"
-        required
-        fullWidth
-        id="email"
-        label="Email Address"
-        name="email"
-        autoComplete="email"
-        autoFocus
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <TextField
-        margin="normal"
-        required
-        fullWidth
-        name="password"
-        label="Password"
-        type="password"
-        id="password"
-        autoComplete="current-password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        sx={{ mt: 3, mb: 2 }}
-        disabled={loading}
-      >
-        {loading ? <CircularProgress size={24} /> : "Sign In"}
-      </Button>
+    <Box sx={{ mt: 1, maxWidth: 400, margin: 'auto' }}>
+      <Box component="form" onSubmit={handleEmailSignIn} sx={{ mb: 2 }}>
+        {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Email Address"
+          name="email"
+          autoComplete="email"
+          autoFocus
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          name="password"
+          label="Password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+          disabled={loading}
+        >
+          {loading ? <CircularProgress size={24} /> : "Sign In"}
+        </Button>
+      </Box>
+      
+      <Divider sx={{ my: 2 }}>
+        <Typography variant="body2" color="text.secondary">
+          OR
+        </Typography>
+      </Divider>
+
       <Button
         fullWidth
         variant="outlined"
-        sx={{ mt: 2, mb: 2 }}
+        startIcon={<GoogleIcon />}
         onClick={handleGoogleSignIn}
         disabled={loading}
+        sx={{ mt: 2 }}
       >
-        {loading ? <CircularProgress size={24} /> : "Sign in with Google"}
+        Sign in with Google
       </Button>
     </Box>
   );

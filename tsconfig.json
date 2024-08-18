@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "esnext",  // Cambiado a 'esnext' para soporte moderno
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -14,12 +14,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",  // Esta línea es crucial
+    "jsx": "react-jsx",
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "types": ["vite/client"]  // Asegura que los tipos de Vite estén incluidos
   },
-  "include": ["src"],
+  "include": ["src", "env.d.ts"],  // Incluye env.d.ts en la configuración
   "exclude": ["node_modules"]
 }

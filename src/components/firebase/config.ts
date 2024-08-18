@@ -4,14 +4,15 @@ import { getFirestore } from "firebase/firestore";
 import { getFunctions } from "firebase/functions";
 import { getAnalytics } from "firebase/analytics";
 
+// Configuración de Firebase utilizando variables de entorno
 export const firebaseConfig = {
-  apiKey: "AIzaSyBBNpr7GnqwGskBmpvcK8hBwLp4IT0v6eE",  
-  authDomain: "vozav-26f94.firebaseapp.com",
-  projectId: "vozav-26f94",
-  storageBucket: "vozav-26f94.appspot.com",
-  messagingSenderId: "825156724687",
-  appId: "1:825156724687:web:c13ad9f3927ae4216e54ba",
-  measurementId: "G-J8SPV0B35P",
+  apiKey: import.meta.env.VITE_REACT_APP_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_REACT_APP_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 // Inicializar Firebase
@@ -23,13 +24,10 @@ export const db = getFirestore(app);
 export const functions = getFunctions(app);
 export const analytics = getAnalytics(app);
 
-// Función opcional para inicializar analytics solo en entornos que lo soporten
+// Función opcional para inicializar Analytics solo en entornos que lo soporten
 export const initializeAnalytics = () => {
-  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
+  if (typeof window !== 'undefined' && import.meta.env.NODE_ENV ==='production') {
     return getAnalytics(app);
   }
   return null;
 };
-
-// Puedes usar esta función en tu aplicación principal si prefieres inicializar analytics condicionalmente
-// const analytics = initializeAnalytics();
