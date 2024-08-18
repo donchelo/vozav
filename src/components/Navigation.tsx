@@ -20,28 +20,12 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AuthButton from './AuthButton';
-import theme from '../styles/theme'; // Importa el tema centralizado
+import LogoAvatar from './LogoAvatar';
+import theme from '../styles/theme'; // Asegúrate de importar el theme
 
-// Content for About and Contact sections
-const aboutContent = `En vozav, creemos en el poder del voz a voz digital. Sabemos que las mejores recomendaciones provienen de personas que han vivido experiencias reales, y por eso hemos creado una plataforma donde la confianza y la autenticidad son lo más importante.
-
-Nuestra misión es facilitarte el acceso a los mejores servicios locales, conectándote con la comunidad a través de recomendaciones genuinas. En vozav, cada reseña y cada opinión provienen de usuarios verificados que, como tú, buscan calidad y fiabilidad en cada servicio que eligen.
-
-Nos dedicamos a construir una comunidad activa y comprometida, donde el voz a voz no solo es una herramienta, sino la base de una red de apoyo entre quienes desean compartir y descubrir lo mejor que la ciudad tiene para ofrecer. Ya sea que busques un servicio confiable, un nuevo lugar para explorar o simplemente quieras compartir tu experiencia, vozav es tu aliado en cada paso del camino.`;
-
-const contactContent = `En vozav, valoramos cada palabra que viene de nuestra comunidad. Si tienes preguntas, comentarios o simplemente quieres compartir tu experiencia, estamos aquí para escucharte. El voz a voz es lo que nos impulsa, y tu opinión es fundamental para mejorar cada día.
-
-Puedes ponerte en contacto con nosotros a través de:
-* Correo electrónico: contacto@vozav.com
-* Teléfono: +57 (XXX) XXX-XXXX
-* Formulario de contacto: Completa el formulario a continuación y te responderemos lo más pronto posible.
-
-Síguenos en nuestras redes sociales y únete a la conversación. Comparte tus experiencias y descubre qué es lo que otros están diciendo:
-* Facebook: facebook.com/vozav
-* Twitter: twitter.com/vozav
-* Instagram: instagram.com/vozav
-
-Queremos que te sientas parte de esta comunidad, donde el voz a voz te conecta con lo mejor que la ciudad tiene para ofrecer. ¡Estamos ansiosos por saber de ti!`;
+// Contenidos de about y contact
+const aboutContent = `En vozav, creemos en el poder del voz a voz digital...`; // (agrega el contenido completo)
+const contactContent = `En vozav, valoramos cada palabra que viene de nuestra comunidad...`; // (agrega el contenido completo)
 
 const Navigation: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -118,6 +102,7 @@ const Navigation: React.FC = () => {
               <MenuIcon />
             </IconButton>
           )}
+          <LogoAvatar />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
             vozav
           </Typography>
