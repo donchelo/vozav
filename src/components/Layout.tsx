@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Container } from '@mui/material';
+import { Box, Container, Link, Typography } from '@mui/material';
 import Navigation from './Navigation';
 
 interface LayoutProps {
@@ -14,7 +14,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         {children}
       </Container>
       <Box component="footer" sx={{ py: 3, textAlign: 'center' }}>
-        © {new Date().getFullYear()} Your App Name. All rights reserved.
+        <Typography variant="body2" color="text.secondary">
+          © {new Date().getFullYear()} Our App. All rights reserved.
+        </Typography>
+        <Link href="#" color="inherit" sx={{ mx: 1 }}>
+          Privacy Policy
+        </Link>
+        <Link href="#" color="inherit" sx={{ mx: 1 }}>
+          Terms of Service
+        </Link>
       </Box>
     </Box>
   );

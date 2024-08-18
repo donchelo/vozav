@@ -6,15 +6,10 @@ import Layout from './components/Layout';
 import AppRoutes from './routes';
 import LoadingScreen from './components/LoadingScreen';
 
-// Create a theme instance
 const theme = createTheme({
   palette: {
-    primary: {
-      main: '#1976d2',
-    },
-    secondary: {
-      main: '#dc004e',
-    },
+    primary: { main: '#1976d2' },
+    secondary: { main: '#dc004e' },
     background: {
       default: '#f5f5f5',
       paper: '#ffffff',
@@ -41,15 +36,13 @@ const AppContent: React.FC = () => {
   );
 };
 
-const App: React.FC = () => {
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <AuthProvider>
-        <AppContent />
-      </AuthProvider>
-    </ThemeProvider>
-  );
-};
+const App: React.FC = () => (
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  </ThemeProvider>
+);
 
 export default App;
