@@ -1,60 +1,98 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import { 
-  Typography, 
-  Box, 
-  Button, 
+import {
+  Typography,
+  Box,
+  Button,
   Paper,
   useTheme,
   Grid,
   Card,
   CardContent,
-  CardActions
+  CardActions,
+  Container,
+  styled
 } from '@mui/material';
-import { Home as HomeIcon, Login as LoginIcon, Explore as ExploreIcon, Verified as VerifiedIcon, Group as GroupIcon, Map as MapIcon, Security as SecurityIcon } from '@mui/icons-material';
+import {
+  Home as HomeIcon,
+  Login as LoginIcon,
+  Explore as ExploreIcon,
+  Verified as VerifiedIcon,
+  Group as GroupIcon,
+  Map as MapIcon,
+  Security as SecurityIcon
+} from '@mui/icons-material';
+
+// Styled components for consistent styling
+const StyledIcon = styled(Box)(({ theme }) => ({
+  fontSize: 48,
+  color: theme.palette.primary.main,
+  marginBottom: theme.spacing(2),
+}));
+
+const StyledCard = styled(Card)(({ theme }) => ({
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+  '&:hover': {
+    transform: 'translateY(-5px)',
+    boxShadow: theme.shadows[8],
+  },
+}));
+
+const StyledCardContent = styled(CardContent)({
+  flexGrow: 1,
+});
+
+// Content items array
+const contentItems = [
+  {
+    title: "Descubre y Confía",
+    content: "Vozav es tu guía local para encontrar servicios de calidad, respaldados por la confianza de miles de usuarios. Descubre lo mejor de la ciudad con recomendaciones auténticas y personalizadas.",
+    icon: ExploreIcon,
+    color: 'primary'
+  },
+  {
+    title: "Servicios Verificados a Tu Alcance",
+    content: "Accede a una plataforma centralizada con los mejores servicios locales, verificados por nuestra comunidad. La calidad y la confianza, ahora en un solo lugar.",
+    icon: VerifiedIcon,
+    color: 'secondary'
+  },
+  {
+    title: "Toma Decisiones Informadas",
+    content: "Con Vozav, no pierdas tiempo buscando. Filtra, compara y elige los servicios que realmente necesitas, basándote en opiniones reales y detalladas.",
+    icon: SecurityIcon,
+    color: 'success'
+  },
+  {
+    title: "Conéctate con Tu Comunidad",
+    content: "Sé parte de una comunidad que comparte tus intereses. Descubre nuevos servicios, participa en eventos locales y contribuye con tus propias recomendaciones.",
+    icon: GroupIcon,
+    color: 'warning'
+  },
+  {
+    title: "Encuentra Servicios Cercanos",
+    content: "Localiza servicios de calidad cerca de ti con nuestra integración de mapas y geolocalización. La ciudad a tu alcance, donde quiera que estés.",
+    icon: MapIcon,
+    color: 'info'
+  },
+  {
+    title: "Garantía de Autenticidad",
+    content: "En Vozav, cada recomendación cuenta. Verificamos la autenticidad de usuarios y reseñas para ofrecerte una experiencia confiable y segura.",
+    icon: SecurityIcon,
+    color: 'error'
+  }
+] as const;
 
 const Home: React.FC = () => {
   const { user } = useAuth();
   const theme = useTheme();
 
-  // Define los elementos de contenido
-  const contentItems = [
-    {
-      title: "Descubre y Confía",
-      content: "Vozav es tu guía local para encontrar servicios de calidad, respaldados por la confianza de miles de usuarios. Descubre lo mejor de la ciudad con recomendaciones auténticas y personalizadas.",
-      icon: <ExploreIcon sx={{ fontSize: 40, color: theme.palette.primary.main }} />
-    },
-    {
-      title: "Servicios Verificados a Tu Alcance",
-      content: "Accede a una plataforma centralizada con los mejores servicios locales, verificados por nuestra comunidad. La calidad y la confianza, ahora en un solo lugar.",
-      icon: <VerifiedIcon sx={{ fontSize: 40, color: theme.palette.secondary.main }} />
-    },
-    {
-      title: "Toma Decisiones Informadas",
-      content: "Con Vozav, no pierdas tiempo buscando. Filtra, compara y elige los servicios que realmente necesitas, basándote en opiniones reales y detalladas.",
-      icon: <SecurityIcon sx={{ fontSize: 40, color: theme.palette.success.main }} />
-    },
-    {
-      title: "Conéctate con Tu Comunidad",
-      content: "Sé parte de una comunidad que comparte tus intereses. Descubre nuevos servicios, participa en eventos locales y contribuye con tus propias recomendaciones.",
-      icon: <GroupIcon sx={{ fontSize: 40, color: theme.palette.warning.main }} />
-    },
-    {
-      title: "Encuentra Servicios Cercanos",
-      content: "Localiza servicios de calidad cerca de ti con nuestra integración de mapas y geolocalización. La ciudad a tu alcance, donde quiera que estés.",
-      icon: <MapIcon sx={{ fontSize: 40, color: theme.palette.info.main }} />
-    },
-    {
-      title: "Garantía de Autenticidad",
-      content: "En Vozav, cada recomendación cuenta. Verificamos la autenticidad de usuarios y reseñas para ofrecerte una experiencia confiable y segura.",
-      icon: <SecurityIcon sx={{ fontSize: 40, color: theme.palette.error.main }} />
-    }
-  ];
-
   return (
-    <Box sx={{ flexGrow: 1, mt: 8, px: 4 }}>
-      {/* Encabezado */}
+    <Container maxWidth="lg" sx={{ mt: 8, mb: 4 }}>
+      {/* Header */}
       <Paper 
         elevation={3} 
         sx={{ 
@@ -66,7 +104,9 @@ const Home: React.FC = () => {
           mb: 4
         }}
       >
-        <HomeIcon sx={{ fontSize: 48, color: theme.palette.primary.main, mb: 2 }} />
+        <StyledIcon>
+          <HomeIcon />
+        </StyledIcon>
         <Typography component="h1" variant="h4" gutterBottom>
           Bienvenido a Vozav
         </Typography>
@@ -107,14 +147,14 @@ const Home: React.FC = () => {
         )}
       </Paper>
 
-      {/* Contenido principal */}
+      {/* Main content */}
       <Grid container spacing={4}>
         {contentItems.map((item, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
-            <Card raised>
-              <CardContent>
+            <StyledCard>
+              <StyledCardContent>
                 <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-                  {item.icon}
+                  <item.icon sx={{ fontSize: 40, color: theme.palette[item.color].main }} />
                 </Box>
                 <Typography variant="h5" component="div" gutterBottom>
                   {item.title}
@@ -122,17 +162,17 @@ const Home: React.FC = () => {
                 <Typography variant="body2" color="text.secondary">
                   {item.content}
                 </Typography>
-              </CardContent>
+              </StyledCardContent>
               <CardActions>
-                <Button size="small" color="primary">
+                <Button size="small" color={item.color}>
                   Saber más
                 </Button>
               </CardActions>
-            </Card>
+            </StyledCard>
           </Grid>
         ))}
       </Grid>
-    </Box>
+    </Container>
   );
 };
 
