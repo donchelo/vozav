@@ -22,38 +22,39 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AuthButton from './AuthButton';
 import LogoAvatar from './LogoAvatar';
 import ReactMarkdown from 'react-markdown';
+import logo4 from '../components/assets/logo4.png';  // Import the logo
 
-// Definimos la interfaz para los elementos de navegación
+// Navigation items interface
 interface NavItem {
   text: string;
   path?: string;
   action?: () => void;
 }
 
-// Contenido de about en formato Markdown
+// About content in Markdown format
 const aboutContent = `
-# Acerca de Vozav
+# About Vozav
 
-## Nuestra Misión
+## Our Mission
 
-Vozav transforma el descubrimiento de servicios locales, llevando el poder del "voz a voz" al mundo digital. Conectamos a residentes y turistas con los mejores servicios de la ciudad a través de recomendaciones auténticas y confiables.
+Vozav transforms the discovery of local services, bringing the power of word-of-mouth to the digital world. We connect residents and tourists with the best services in the city through authentic and trustworthy recommendations.
 
-## ¿Qué nos hace únicos?
+## What Makes Us Unique?
 
-1. **Recomendaciones Verificadas**: Experiencias reales y confiables.
-2. **Personalización Inteligente**: Sugerencias adaptadas a tus preferencias.
-3. **Comunidad de Confianza**: Una red local activa y comprometida.
+1. **Verified Recommendations**: Real, trustworthy experiences.
+2. **Smart Personalization**: Suggestions tailored to your preferences.
+3. **Trusted Community**: An active, engaged local network.
 
-## Beneficios
+## Benefits
 
-- Ahorra tiempo encontrando servicios confiables.
-- Toma decisiones informadas basadas en experiencias reales.
-- Descubre nuevas experiencias locales de calidad.
-- Conéctate con tu comunidad y contribuye a su crecimiento.
+- Save time finding reliable services.
+- Make informed decisions based on real experiences.
+- Discover new, quality local experiences.
+- Connect with your community and contribute to its growth.
 
-Vozav no es solo una plataforma, es un ecosistema donde la confianza, la comunidad y la innovación se unen para mejorar tu vida cotidiana.
+Vozav is not just a platform, it's an ecosystem where trust, community, and innovation come together to improve your everyday life.
 
-**Vozav: Descubre, Comparte, Confía.**
+**Vozav: Discover, Share, Trust.**
 `;
 
 const Navigation: React.FC = () => {
@@ -97,9 +98,9 @@ const Navigation: React.FC = () => {
 
   const renderDrawerContent = () => (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', bgcolor: 'background.paper', height: '100%' }}>
-      <Typography variant="h6" sx={{ my: 2, color: 'primary.main' }}>
-        vozav
-      </Typography>
+      <Box sx={{ my: 2 }}>
+        <img src={logo4} alt="Vozav Logo" style={{ height: '20px', paddingTop: '10px' }} /> {/* Top padding added */}
+      </Box>
       <List>
         {navItems.map((item) => (
           <ListItem key={item.text} disablePadding>
@@ -164,9 +165,9 @@ const Navigation: React.FC = () => {
             </IconButton>
           )}
           <LogoAvatar />
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
-            vozav
-          </Typography>
+          <Box sx={{ flexGrow: 1 }}>
+            <img src={logo4} alt="Vozav Logo" style={{ height: '20px', paddingTop: '8px' }} /> {/* Top padding added */}
+          </Box>
           <Typography variant="subtitle2" sx={{ display: { xs: 'none', sm: 'block' }, mr: 2, fontStyle: 'italic' }}>
             El poder del voz a voz
           </Typography>
