@@ -23,9 +23,8 @@ import AuthButton from './AuthButton';
 import LogoAvatar from './LogoAvatar';
 import theme from '../styles/theme'; // Asegúrate de importar el theme
 
-// Contenidos de about y contact
+// Contenido de about
 const aboutContent = `En vozav, creemos en el poder del voz a voz digital...`; // (agrega el contenido completo)
-const contactContent = `En vozav, valoramos cada palabra que viene de nuestra comunidad...`; // (agrega el contenido completo)
 
 const Navigation: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -53,8 +52,7 @@ const Navigation: React.FC = () => {
 
   const navItems = [
     { text: 'Home', path: '/' },
-    { text: 'About', action: () => handleDialogOpen(aboutContent, 'About vozav') },
-    { text: 'Contact', action: () => handleDialogOpen(contactContent, 'Contact Us') },
+    { text: 'About', action: () => handleDialogOpen(aboutContent, 'About vozav') }
   ];
 
   const drawer = (

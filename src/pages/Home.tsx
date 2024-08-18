@@ -1,28 +1,23 @@
 import React, { useState } from 'react';
 import {
-  Typography, Box, Button, Paper, useTheme, Grid, Container, styled, alpha
+  Typography, Box, Paper, Grid, Container, styled
 } from '@mui/material';
-import {
-  Home as HomeIcon, Login as LoginIcon, Explore as ExploreIcon, Verified as VerifiedIcon,
-  Group as GroupIcon, Map as MapIcon, Security as SecurityIcon
-} from '@mui/icons-material';
-import { Link as RouterLink } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
+import { useTheme } from '@mui/material/styles';
 import FeatureDialog from '../components/FeatureDialog';
 import featuresData from '../data/features.json';
+import HeroSection from '../components/HeroSection'; // Importa el nuevo componente HeroSection
 
 // Definición de iconos
+import {
+  Explore as ExploreIcon, Verified as VerifiedIcon, Security as SecurityIcon,
+  Group as GroupIcon, Map as MapIcon, Home as HomeIcon
+} from '@mui/icons-material';
+
 const iconMapping = {
   ExploreIcon, VerifiedIcon, SecurityIcon, GroupIcon, MapIcon, HomeIcon
 };
 
 // Estilos personalizados
-const StyledIcon = styled(Box)(({ theme }) => ({
-  fontSize: 64,
-  color: theme.palette.primary.main,
-  marginBottom: theme.spacing(3),
-}));
-
 const StyledCard = styled(Paper)(({ theme }) => ({
   height: '100%',
   display: 'flex',
@@ -36,17 +31,7 @@ const StyledCard = styled(Paper)(({ theme }) => ({
   },
 }));
 
-const GradientBox = styled(Box)(({ theme }) => ({
-  background: `linear-gradient(45deg, ${theme.palette.primary.main} 30%, ${theme.palette.secondary.main} 90%)`,
-  borderRadius: theme.shape.borderRadius,
-  padding: theme.spacing(6, 4),
-  color: theme.palette.common.white,
-  textAlign: 'center',
-  marginBottom: theme.spacing(6),
-}));
-
 const Home: React.FC = () => {
-  const { user } = useAuth();
   const theme = useTheme();
 
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -63,66 +48,9 @@ const Home: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 8, mb: 4 }}>
+    <Container maxWidth="lg" sx={{ mt: -4, mb: 4 }}>
       {/* Hero Section */}
-      <GradientBox>
-        <StyledIcon>
-          <HomeIcon fontSize="inherit" />
-        </StyledIcon>
-        <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
-          Bienvenido a Vozav
-        </Typography>
-        <Typography variant="h5" paragraph>
-          Tu plataforma líder de recomendaciones de servicios locales
-        </Typography>
-        {user ? (
-          <>
-            <Typography variant="h6" gutterBottom>
-              Bienvenido de nuevo, {user.email}!
-            </Typography>
-            <Button
-              component={RouterLink}
-              to="/profile"
-              variant="contained"
-              size="large"
-              sx={{
-                mt: 2,
-                bgcolor: 'common.white',
-                color: 'primary.main',
-                '&:hover': {
-                  bgcolor: alpha(theme.palette.common.white, 0.9),
-                },
-              }}
-            >
-              Ir al Perfil
-            </Button>
-          </>
-        ) : (
-          <>
-            <Typography variant="body1" paragraph>
-              Inicia sesión para acceder a tu perfil y descubrir los mejores servicios locales.
-            </Typography>
-            <Button
-              component={RouterLink}
-              to="/auth"
-              variant="outlined"
-              size="large"
-              startIcon={<LoginIcon />}
-              sx={{
-                mt: 2,
-                borderColor: 'common.white',
-                color: 'common.white',
-                '&:hover': {
-                  bgcolor: alpha(theme.palette.common.white, 0.1),
-                  borderColor: 'common.white',
-                },
-              }}
-            >
-              Iniciar Sesión
-            </Button>
-          </>
-        )}
-      </GradientBox>
+      <HeroSection />
 
       {/* Features Grid */}
       <Grid container spacing={4}>
