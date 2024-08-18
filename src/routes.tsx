@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import AuthPage from './pages/AuthPage';
 import Profile from './pages/Profile';
+import QuestionManager from './pages/QuestionManager';  // Importar QuestionManager
 import PrivateRoute from './components/PrivateRoute';
 
 const AppRoutes: React.FC = () => {
@@ -15,6 +16,14 @@ const AppRoutes: React.FC = () => {
         element={
           <PrivateRoute>
             <Profile />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/question-manager"
+        element={
+          <PrivateRoute>
+            <QuestionManager />
           </PrivateRoute>
         }
       />

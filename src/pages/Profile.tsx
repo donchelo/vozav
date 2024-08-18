@@ -5,9 +5,11 @@ import {
   Typography, 
   Box, 
   Paper, 
-  Avatar,
-  useTheme
+  Avatar, 
+  Button, 
+  useTheme 
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const Profile: React.FC = () => {
   const { user } = useAuth();
@@ -38,6 +40,23 @@ const Profile: React.FC = () => {
               {user?.email}
             </Typography>
           </Box>
+        </Box>
+        {/* Enlace a QuestionManager */}
+        <Box sx={{ mt: 4 }}>
+          <Button 
+            component={Link} 
+            to="/question-manager" 
+            variant="contained" 
+            color="primary" 
+            size="large"
+            sx={{ 
+              width: '100%',
+              textTransform: 'none',
+              padding: '16px'
+            }}
+          >
+            Go to Question Manager
+          </Button>
         </Box>
       </Paper>
     </Container>
