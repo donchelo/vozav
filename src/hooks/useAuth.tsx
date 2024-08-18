@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useEffect, useState, PropsWithChildren } from 'react';
-import { User, signInWithEmailAndPassword, signOut as firebaseSignOut, UserCredential } from 'firebase/auth';
+import { User, signInWithEmailAndPassword, signOut as firebaseSignOut, UserCredential, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../services/firebase';
 
 interface AuthContextType {
   user: User | null;
   signIn: (email: string, password: string) => Promise<UserCredential>;
+  signInWithGoogle: () => Promise<UserCredential>;
   signOut: () => Promise<void>;
 }
 
@@ -21,9 +22,14 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const signIn = (email: string, password: string) => 
     signInWithEmailAndPassword(auth, email, password);
 
+  const signInWithGoogle = () => {
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(auth, provider);
+  };
+
   const signOut = () => firebaseSignOut(auth);
 
-  const value: AuthContextType = { user, signIn, signOut };
+  const value: AuthContextType = { user, signIn, signInWithGoogle, signOut };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
