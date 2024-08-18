@@ -17,7 +17,7 @@ const LogoAvatar: React.FC = () => {
           img: {
             objectFit: 'cover', // Asegura que la imagen cubra el contenedor
             objectPosition: 'center', // Centra la imagen
-            transform: 'scale(5)' // Aplica un zoom de 1.5x
+            transform: 'scale(5)' // Aplica un zoom de 5x
           }
         }}
       />
