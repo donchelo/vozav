@@ -21,7 +21,7 @@ const AuthPage = () => {
     setLoading(true);
     try {
       await signInWithGoogle();
-      navigate('/dashboard');
+      navigate('/profile');
     } catch (error) {
       console.error('Google authentication failed', error);
     } finally {
